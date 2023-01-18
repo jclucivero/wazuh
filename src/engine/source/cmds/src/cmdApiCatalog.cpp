@@ -237,7 +237,7 @@ void singleRequest(const std::string& socketPath,
             const auto content = data.value().getString("/content");
             if (content)
             {
-                const std::string msg {fmt::format("Request \"{} {}\" response: \"{}\"",
+                const std::string msg {fmt::format(R"(Request "{} {}" response: "{}")",
                                                    actionStr,
                                                    name.fullName(),
                                                    content.value())};

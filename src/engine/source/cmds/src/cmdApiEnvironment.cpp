@@ -221,9 +221,7 @@ void environment(const std::string& socketPath,
     {
         WAZUH_LOG_ERROR("Engine API Environment: Invalid action \"{}\", for more "
                         "information use --help.");
-        return;
     }
 
-    return;
 }
 } // namespace cmd

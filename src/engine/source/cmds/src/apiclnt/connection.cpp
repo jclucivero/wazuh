@@ -153,7 +153,7 @@ std::string connection(const std::string& socketPath, const std::string& request
                     request);
 
     // Add protocol header
-    int32_t length = request.size();
+    auto length = request.size();
     std::unique_ptr<char[]> buffer(new char[sizeof(length) + length]);
     std::memcpy(buffer.get(), &length, sizeof(length));
     std::memcpy(buffer.get() + sizeof(length), request.data(), length);

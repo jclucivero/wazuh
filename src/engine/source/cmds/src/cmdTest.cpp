@@ -26,7 +26,7 @@ namespace
 std::atomic<bool> gs_doRun = true;
 cmd::StackExecutor g_exitHanlder {};
 
-void sigint_handler(const int signum)
+void sigintHandler(const int signum)
 {
     gs_doRun = false;
 }
@@ -127,7 +127,7 @@ void test(const std::string& kvdbPath,
         std::shared_ptr<store::FileDriver> driver;
         json::Json testEnvironment;
 
-        std::variant<json::Json, base::Error> get(const base::Name& name) const
+        std::variant<json::Json, base::Error> get(const base::Name& name) const override
         {
             if (name.parts()[0] == "environment")
             {

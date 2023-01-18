@@ -57,7 +57,7 @@ Catalog::Catalog(const Config& config)
         catch (const std::exception& e)
         {
             WAZUH_LOG_DEBUG(
-                "Engine catalog: \"{}\" method: Config: \"{}\".", __func__, str);
+                "Engine catalog: \"Catalog(const Config& config)\" method: Config: \"{}\".", str);
             result = base::Error {e.what()};
         }
 
@@ -161,7 +161,7 @@ std::optional<base::Error> Catalog::postResource(const Resource& collection,
     if (Resource::Type::COLLECTION != collection.m_type)
     {
         return base::Error {
-            fmt::format("Expected resource type is \"{}\", but got \"{}\"",
+            fmt::format(R"(Expected resource type is "{}", but got "{}")",
                         Resource::typeToStr(collection.m_type),
                         Resource::typeToStr(Resource::Type::COLLECTION))};
     }
@@ -221,7 +221,7 @@ std::optional<base::Error> Catalog::postResource(const Resource& collection,
         if (collection.m_name.parts()[i] != contentName.parts()[i])
         {
             return base::Error {
-                fmt::format("Invalid content name \"{}\" for collection \"{}\"",
+                fmt::format(R"(Invalid content name "{}" for collection "{}")",
                             contentName.fullName(),
                             collection.m_name.fullName())};
         }
@@ -306,7 +306,7 @@ std::optional<base::Error> Catalog::putResource(const Resource& item,
     if (contentName != item.m_name)
     {
         return base::Error {
-            fmt::format("Invalid content name \"{}\" of \"{}\" for type \"{}\"",
+            fmt::format(R"(Invalid content name "{}" of "{}" for type "{}")",
                         contentNameStr.value(),
                         item.m_name.fullName(),
                         Resource::typeToStr(item.m_type))};

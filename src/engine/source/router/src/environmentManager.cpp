@@ -111,7 +111,7 @@ std::vector<std::string> EnvironmentManager::getAllEnvironments()
 
 api::CommandFn EnvironmentManager::apiCallback()
 {
-    return [this](const json::Json params)
+    return [this](const json::Json& params)
     {
         api::WazuhResponse response {};
         const auto action = params.getString("/action");
@@ -194,7 +194,7 @@ api::WazuhResponse EnvironmentManager::apiGetEnvironment(const json::Json& param
     {
         envs.appendString(e);
     }
-    response.data(std::move(envs));
+    response.data(envs);
 
     return response;
 }

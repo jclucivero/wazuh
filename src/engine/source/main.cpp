@@ -513,7 +513,7 @@ std::shared_ptr<CLI::App> configureCliApp()
 int kbhit()
 {
     // timeout structure passed into select
-    struct timeval tv;
+    struct timeval tv {};
     // fd_set passed into select
     fd_set fds;
     // Set up the timeout.  here we can wait for 1 second
@@ -528,7 +528,7 @@ int kbhit()
     // the fdset for reads, writes, and errors.  We are only passing in reads.
     // the last parameter is the timeout.  select will return if an FD is ready or
     // the timeout has occurred
-    select(STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
+    select(STDIN_FILENO + 1, &fds, nullptr, nullptr, &tv);
     // return 0 if STDIN is not ready to be read.
     return FD_ISSET(STDIN_FILENO, &fds);
 }

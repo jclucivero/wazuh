@@ -21,7 +21,7 @@ RuntimeEnvironment::build(std::shared_ptr<builder::Builder> builder)
             "Engine runtime environment: Environment is already running."};
     }
 
-    if (m_environments.size() > 0)
+    if (!m_environments.empty())
     {
         return base::Error {"Engine runtime environment: Environment is already built"};
     }

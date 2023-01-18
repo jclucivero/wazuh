@@ -45,13 +45,12 @@ constexpr unsigned int TRY_ENQUEUE_WAIT_MS {100};
  */
 static inline int bindUnixDatagramSocket(const char* path)
 {
-    struct sockaddr_un n_us;
+    struct sockaddr_un n_us {};
 
     /* TODO: Check the unlink's parameter before unlinking it (to be sure that it is a
      * socket and not a regular file) */
     unlink(path);
 
-    memset(&n_us, 0, sizeof(n_us));
     n_us.sun_family = AF_UNIX;
     strncpy(n_us.sun_path, path, sizeof(n_us.sun_path) - 1);
 

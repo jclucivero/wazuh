@@ -205,8 +205,6 @@ void kvdbGetValue(const std::string& socketPath,
         const auto dataVal = resData.str("/value").value();
         std::cout << fmt::format("Key: {}\nValue: {}\n", dataKey, dataVal);
     }
-
-    return;
 }
 
 /**
@@ -257,8 +255,6 @@ void kvdbInsertKeyValue(const std::string& socketPath,
         return;
     }
     std::cout << response.value().message().value() << std::endl;
-
-    return;
 }
 
 /**
@@ -352,8 +348,6 @@ void kvdbRemoveKV(const std::string& socketPath,
         return;
     }
     std::cout << response.value().message().value() << std::endl;
-
-    return;
 }
 
 } // namespace
@@ -396,7 +390,6 @@ void kvdb(const std::string& kvdbName,
         kvdbRemoveKV(socketPath, kvdbName, kvdbKey);
     }
 
-    return;
 }
 
 } // namespace cmd

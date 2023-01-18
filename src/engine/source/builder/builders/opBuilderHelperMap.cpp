@@ -211,14 +211,14 @@ opBuilderHelperIntTransformation(const std::string& targetField,
             catch (const std::exception& e)
             {
                 throw std::runtime_error(fmt::format(
-                    "\"{}\" function: Could not convert parameter \"{}\" to int",
+                    R"("{}" function: Could not convert parameter "{}" to int)",
                     name,
                     rightParameter.m_value));
             }
             if (IntOperator::DIV == op && 0 == std::get<int>(rValue))
             {
                 throw std::runtime_error(
-                    fmt::format("\"{}\" function: Division by zero", name));
+                    fmt::format(R"("{}" function: Division by zero)", name));
             }
 
             break;
@@ -229,7 +229,7 @@ opBuilderHelperIntTransformation(const std::string& targetField,
 
         default:
             throw std::runtime_error(
-                fmt::format("\"{}\" function: Invalid parameter type of \"{}\"",
+                fmt::format(R"("{}" function: Invalid parameter type of "{}")",
                             name,
                             rightParameter.m_value));
     }
@@ -339,7 +339,7 @@ std::optional<std::string> hashStringSHA1(std::string& input)
     constexpr int OS_SHA1_HEXDIGEST_SIZE = (SHA_DIGEST_LENGTH * 2);
     constexpr int OS_SHA1_ARRAY_SIZE_LEN = OS_SHA1_HEXDIGEST_SIZE + 1;
 
-    char* parameter = NULL;
+    char* parameter = nullptr;
     unsigned char digest[EVP_MAX_MD_SIZE];
     unsigned int digest_size;
 
@@ -350,7 +350,7 @@ std::optional<std::string> hashStringSHA1(std::string& input)
         return std::nullopt;
     }
 
-    if (1 != EVP_DigestInit_ex(ctx, EVP_sha1(), NULL))
+    if (1 != EVP_DigestInit_ex(ctx, EVP_sha1(), nullptr))
     {
         // Failed during hash context initialization
         EVP_MD_CTX_destroy(ctx);
@@ -426,7 +426,7 @@ base::Expression opBuilderHelperStringTrim(const std::any& definition)
     if ('\0' == trimType)
     {
         throw std::runtime_error(fmt::format(
-            "\"{}\" function: Invalid trim type \"{}\"", name, parameters[0].m_value));
+            R"("{}" function: Invalid trim type "{}")", name, parameters[0].m_value));
     }
 
     // get trim char
@@ -434,7 +434,7 @@ base::Expression opBuilderHelperStringTrim(const std::any& definition)
     if (trimChar.size() != 1)
     {
         throw std::runtime_error(
-            fmt::format("\"{}\" function: Invalid trim char \"{}\"", name, trimChar));
+            fmt::format(R"("{}" function: Invalid trim char "{}")", name, trimChar));
     }
 
     // Tracing messages
@@ -523,7 +523,7 @@ base::Expression opBuilderHelperStringConcat(const std::any& definition)
         {
             std::string result {};
 
-            for (auto parameter : parameters)
+            for (const auto& parameter : parameters)
             {
                 if (helper::base::Parameter::Type::REFERENCE == parameter.m_type)
                 {
@@ -947,7 +947,7 @@ base::Expression opBuilderHelperRegexExtract(const std::any& definition)
     if (!regex_ptr->ok())
     {
         throw std::runtime_error(
-            fmt::format("\"{}\" function: Error compiling regex \"{}\": {}",
+            fmt::format(R"("{}" function: Error compiling regex "{}": {})",
                         name,
                         parameters[1].m_value,
                         regex_ptr->error()));
@@ -1067,7 +1067,7 @@ base::Expression opBuilderHelperAppendSplitString(const std::any& definition)
     if (parameters[1].m_value.size() != 1)
     {
         throw std::runtime_error(
-            fmt::format("\"{}\" function: Separator \"{}\" should be one character long",
+            fmt::format(R"("{}" function: Separator "{}" should be one character long)",
                         name,
                         parameters[1].m_value.size()));
     }

@@ -81,8 +81,8 @@ void singleRequest(const std::string& socketPath,
                    const std::string& path);
 
 void loadRuleset(const std::string& socketPath,
-                    const std::string& name,
-                    const std::string& collectionPath,
+                    const std::string& collectionNameStr,
+                    const std::string& collectionPathStr,
                     const std::string& format,
                     const bool recursive);
 

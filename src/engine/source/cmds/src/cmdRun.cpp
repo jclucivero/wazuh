@@ -33,7 +33,7 @@ namespace
 {
 cmd::StackExecutor g_exitHanlder {};
 
-void sigint_handler(const int signum)
+void sigintHandler(const int signum)
 {
     g_exitHanlder.execute();
     exit(EXIT_SUCCESS);
@@ -56,7 +56,7 @@ void run(const std::string& kvdbPath,
     {
         // Set the signal handler for SIGINT
         struct sigaction sigIntHandler;
-        sigIntHandler.sa_handler = sigint_handler;
+        sigIntHandler.sa_handler = sigintHandler;
         sigemptyset(&sigIntHandler.sa_mask);
         sigIntHandler.sa_flags = 0;
         sigaction(SIGINT, &sigIntHandler, nullptr);
