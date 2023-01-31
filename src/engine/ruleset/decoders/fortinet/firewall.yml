@@ -5,7 +5,7 @@ metadata:
   title: Decoder for parsing fortinet firewall logs
   description: Decoder for parsing fortinet firewall logs
   compatibility: >
-    This decoder has been tested on Wazuh version 4.3
+    Wazuh Engine
   author:
     name: Wazuh, Inc.
     date: 2023/01/10
