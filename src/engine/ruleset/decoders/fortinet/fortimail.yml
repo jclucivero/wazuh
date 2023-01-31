@@ -124,33 +124,34 @@ normalize:
     - event.module": fortinet
     - fileset.name": fortimail
     - input.type": log
+    - observer.product: FortiMail
     - observer.type: Firewall
     - observer.vendor: Fortinet
-    - observer.product: FortiMail
-    - rsa.misc.reference_id1: $~log.rsa.misc.reference_id1
-    - rsa.misc.reference_id: $event.code
-    - rsa.misc.msgIdPart1: $event.action
-    - rsa.misc.msgIdPart2: $~log.rsa.internal.messageid
-    - rsa.internal.messageid: $event.action
-    - rsa.internal.messageid: $~log.rsa.internal.messageid
-    - rsa.misc.event_type: $event.action
-    - rsa.misc.severity: $log.level
-    - rsa.misc.filter: $~log.rsa.misc.filter
-    - rsa.misc.result: $~log.rsa.misc.result
-    - rsa.network.domain: $server.domain
-    - rsa.misc.log_session_id: $~log.rsa.misc.filter
-    - rsa.email.email_src: $~log.rsa.email.email_src
-    - rsa.misc.client: $~log.rsa.misc.client
-    - rsa.web.fqdn: $~log.rsa.web.fqdn
-    - rsa.misc.context: $~log.rsa.misc.context
     - rsa.email.email_dst: $~log.rsa.email.email_dst
-    - rsa.misc.virusname: $~log.rsa.misc.virusname
-    - rsa.misc.disposition: $~log.rsa.misc.disposition
-    - rsa.misc.filter: $~log.rsa.misc.filter
+    - rsa.email.email_src: $~log.rsa.email.email_src
     - rsa.email.subject: $~log.rsa.email.subject
     - rsa.email.subject: $~log.rsa.misc.event_type
     - rsa.internal.event_desc: $~log.rsa.internal.event_desc
+    - rsa.internal.messageid: $event.action
+    - rsa.internal.messageid: $~log.rsa.internal.messageid
     - rsa.misc.checksum: $~log.rsa.misc.checksum
+    - rsa.misc.client: $~log.rsa.misc.client
+    - rsa.misc.context: $~log.rsa.misc.context
+    - rsa.misc.disposition: $~log.rsa.misc.disposition
+    - rsa.misc.event_type: $event.action
+    - rsa.misc.filter: $~log.rsa.misc.filter
+    - rsa.misc.filter: $~log.rsa.misc.filter
+    - rsa.misc.log_session_id: $~log.rsa.misc.filter
+    - rsa.misc.msgIdPart1: $event.action
+    - rsa.misc.msgIdPart2: $~log.rsa.internal.messageid
+    - rsa.misc.reference_id1: $~log.rsa.misc.reference_id1
+    - rsa.misc.reference_id: $event.code
+    - rsa.misc.result: $~log.rsa.misc.result
+    - rsa.misc.severity: $log.level
+    - rsa.misc.virusname: $~log.rsa.misc.virusname
+    - rsa.network.domain: $server.domain
+    - rsa.web.fqdn: $~log.rsa.web.fqdn
+
   - check:
       - rsa.internal.event_desc: +ef_exists
     logpar:
@@ -166,26 +167,32 @@ normalize:
       - rsa.misc.result: $~log.rsa.misc.result
       - rsa.email.email_dst: $~log.rsa.email.email_dst
       - rsa.internal.event_desc: +ef_delete
+
   - check:
       - rsa.web.fqdn: +ef_exists
     map:
       - related.hosts: +a_append/$rsa.web.fqdn
+
   - check:
       - host.hostname: +ef_exists
     map:
       - related.hosts: +a_append/$host.hostname
+
   - check:
       - server.domain: +ef_exists
     map:
       - related.hosts: +a_append/$server.domain
+
   - check:
       - destination.ip: +ef_exists
     map:
       - related.ip: +a_append/$destination.ip
+
   - check:
       - source.ip: +ef_exists
     map:
       - related.ip: +a_append/$source.ip
+
   - map:
     - related.user: +a_append/$user.name
     - rsa.misc.event_state: $~log.rsa.misc.event_state
