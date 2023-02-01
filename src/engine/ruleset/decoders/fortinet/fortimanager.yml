@@ -2,10 +2,10 @@
 name: decoder/fortinet-fortimanager/0
 
 metadata:
+  module: fortinet
   title: Decoder for Fortinet FortiManager Endpoint Security
   description: Decoder for Fortinet FortiManager Endpoint Security
-  compatibility: >
-    Wazuh Engine
+  version: [6.0.x, 6.2.x]
   author:
     name: Wazuh, Inc.
     date: 2023/01/20

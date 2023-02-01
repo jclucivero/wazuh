@@ -2,10 +2,10 @@
 name: decoder/fortinet-fortimail/0
 
 metadata:
+  module: fortinet
   title: Decoder for Fortinet fortimail
   description: Decoder for Fortinet fortimail
-  compatibility: >
-    Wazuh Engine
+  version: [6.0.x, 6.2.x]
   author:
     name: Wazuh, Inc.
     date: 2023/01/09
