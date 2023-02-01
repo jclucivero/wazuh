@@ -203,4 +203,3 @@ normalize:
     - /@timestamp: +s_concat/$~log.date/T/$~log.time/.000Z
     - rsa.time.event_time: $/@timestamp
     - ~log: +ef_delete
-
