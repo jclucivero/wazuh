@@ -78,73 +78,70 @@ normalize:
     - ~tmp.payload_messge: <~tmp/kv/=/ /"/'>
 
   # Mapping for all fortinet-firewall types: event, traffic & utm
-  - check:
-    - ~tmp: +ef_exists
-    map:
-      - service.type: "fortinet"
-      - input.type: "log"
-      - tags: ["fortinet-firewall", "forwarded"]
-      - observer.serial_number: $~tmp.devid
-      - observer.egress.interface.name: $~tmp.dstintf
-      - observer.ingress.interface.name: $~tmp.srcintf
-      - observer.name: $~tmp.devname
-      - observer.product: "Fortigate"
-      - observer.type: "firewall"
-      - observer.vendor: "Fortinet"
-      - event.dataset: "fortinet.firewall"
-      - event.module: "fortinet"
-      - event.outcome: "sucess"
-      - event.kind: "event"
-      - event.timezone: $~tmp.tz
-      - event.code: $~tmp.logid
-      - event.duration: $~tmp.duration
-      - event.reference: $~tmp.ref
-      - event.reason: $~tmp.reason
-      - event.action: $~tmp.action
-      - log.level: $~tmp.level
-      - source.packets: $~tmp.sentpkt
-      - source.nat.ip: $~tmp.transip
-      - source.nat.port: $~tmp.transport
-      - source.user.group.name: $~tmp.group
-      - source.bytes: $~tmp.sentbyte
-      - source.mac: $~tmp.mastersrcmac
-      - message: $~tmp.msg
-      - network.application: $~tmp.app
-      - network.iana_number: $~tmp.proto
-      - network.protocol: $~tmp.service
-      - network.direction: $~tmp.dir
-      - network.bytes: $~tmp.sentbyte
-      - rule.id: $~tmp.policyid
-      - rule.description: $~tmp.logdesc
-      - rule.name: $~tmp.policyname
-      - rule.uuid: $~tmp.poluuid
-      - destination.packets: $~tmp.rcvdpkt
-      - destination.bytes: $~tmp.rcvdbyte
-      - url.domain: $~tmp.hostname
-      - url.original: $~tmp.url
-      - url.path: $~tmp.url
-      - url.scheme: $~tmp.service
-      - tls.server.x509.subject.common_name: $~tmp.scertcname
-      - tls.server.x509.issuer.common_name: $~tmp.scertissuer
-      - tls.server.issuer: $~tmp.scertissuer
-      - vulnerability.category: $~tmp.dtype
-      - file.extension: $~tmp.filetype
-      - file.name: $~tmp.filename
-      - file.size: $~tmp.filesize
-      - dns.id: $~tmp.xid
-      - dns.question.class: $~tmp.qclass
-      - dns.question.name: $~tmp.qname
-      - dns.question.type: $~tmp.qtype
-      - related.hosts: [$~tmp.qname]
-      # TODO: it does't work
-      - ~tmp.agent_array: +s_to_array/$~tmp.agent/\/
-      - user_agent.name: $~tmp.agent_array.1
-      - user_agent.original: $~tmp.agent
-      - user_agent.version: $~tmp.agent_array.2
-      - ~tmp.timestamp: +s_concat/$~tmp.date/T/$~tmp.time/.000
-      - ~tmp.subtype: +s_lo/$~tmp.subtype
-      - ~tmp.addrgrp: $~tmp.addr
-
+  - map:
+    - service.type: "fortinet"
+    - input.type: "log"
+    - tags: ["fortinet-firewall", "forwarded"]
+    - observer.serial_number: $~tmp.devid
+    - observer.egress.interface.name: $~tmp.dstintf
+    - observer.ingress.interface.name: $~tmp.srcintf
+    - observer.name: $~tmp.devname
+    - observer.product: "Fortigate"
+    - observer.type: "firewall"
+    - observer.vendor: "Fortinet"
+    - event.dataset: "fortinet.firewall"
+    - event.module: "fortinet"
+    - event.outcome: "sucess"
+    - event.kind: "event"
+    - event.timezone: $~tmp.tz
+    - event.code: $~tmp.logid
+    - event.duration: $~tmp.duration
+    - event.reference: $~tmp.ref
+    - event.reason: $~tmp.reason
+    - event.action: $~tmp.action
+    - log.level: $~tmp.level
+    - source.packets: $~tmp.sentpkt
+    - source.nat.ip: $~tmp.transip
+    - source.nat.port: $~tmp.transport
+    - source.user.group.name: $~tmp.group
+    - source.bytes: $~tmp.sentbyte
+    - source.mac: $~tmp.mastersrcmac
+    - message: $~tmp.msg
+    - network.application: $~tmp.app
+    - network.iana_number: $~tmp.proto
+    - network.protocol: $~tmp.service
+    - network.direction: $~tmp.dir
+    - network.bytes: $~tmp.sentbyte
+    - rule.id: $~tmp.policyid
+    - rule.description: $~tmp.logdesc
+    - rule.name: $~tmp.policyname
+    - rule.uuid: $~tmp.poluuid
+    - destination.packets: $~tmp.rcvdpkt
+    - destination.bytes: $~tmp.rcvdbyte
+    - url.domain: $~tmp.hostname
+    - url.original: $~tmp.url
+    - url.path: $~tmp.url
+    - url.scheme: $~tmp.service
+    - tls.server.x509.subject.common_name: $~tmp.scertcname
+    - tls.server.x509.issuer.common_name: $~tmp.scertissuer
+    - tls.server.issuer: $~tmp.scertissuer
+    - vulnerability.category: $~tmp.dtype
+    - file.extension: $~tmp.filetype
+    - file.name: $~tmp.filename
+    - file.size: $~tmp.filesize
+    - dns.id: $~tmp.xid
+    - dns.question.class: $~tmp.qclass
+    - dns.question.name: $~tmp.qname
+    - dns.question.type: $~tmp.qtype
+    - related.hosts: [$~tmp.qname]
+    # TODO: it does't work
+    - ~tmp.agent_array: +s_to_array/$~tmp.agent/\/
+    - user_agent.name: $~tmp.agent_array.1
+    - user_agent.original: $~tmp.agent
+    - user_agent.version: $~tmp.agent_array.2
+    - ~tmp.timestamp: +s_concat/$~tmp.date/T/$~tmp.time/.000
+    - ~tmp.subtype: +s_lo/$~tmp.subtype
+    - ~tmp.addrgrp: $~tmp.addr
 
   # Check-mapping for all fortinet-firewall types: event, traffic & utm
   - check:
