@@ -121,9 +121,9 @@ parse:
 normalize:
   - map:
     - event.dataset: fortinet.fortimail
-    - event.module": fortinet
-    - fileset.name": fortimail
-    - input.type": log
+    - event.module: fortinet
+    - fileset.name: fortimail
+    - input.type: log
     - observer.product: FortiMail
     - observer.type: Firewall
     - observer.vendor: Fortinet
