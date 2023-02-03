@@ -31,36 +31,36 @@ normalize:
       - event.action: $~tmp.status
       - event.code: $~tmp.service
       - event.created: $event.created
-      - event.dataset: "fortinet.clientendpoint"
-      - event.module: "fortinet"
+      - event.dataset: fortinet.clientendpoint
+      - event.module: fortinet
       - event.outcome: $~tmp.msg
-      - fileset.name: "clientendpoint"
-      - input.type: "log"
+      - fileset.name: clientendpoint
+      - input.type: log
       - network.direction: $~tmp.traff_direct
       - network.protocol: $~tmp.proto
-      - observer.product: "FortiClient"
-      - observer.type: "Anti-Virus"
-      - observer.vendor": "Fortinet"
+      - observer.product: FortiClient
+      - observer.type: Anti-Virus
+      - observer.vendor: Fortinet
       - process.pid: $~tmp.pid
       - related.hosts: +a_append/$host.name/$~tmp.domain
       - related.ip: +a_append/$~tmp.src/$~tmp.dst
       - related.user: [$~tmp.user]
       - rsa.counters.dclass_c1: $~tmp.block_count
-      - rsa.counters.dclass_c1_str: "block_count"
+      - rsa.counters.dclass_c1_str: block_count
       - rsa.internal.messageid: $~tmp.service
       - rsa.investigations.ec_outcome: $~tmp.msg
-      - rsa.investigations.ec_subject: "NetworkComm"
-      - rsa.investigations.ec_theme: "ALM"
+      - rsa.investigations.ec_subject: NetworkComm
+      - rsa.investigations.ec_theme: ALM
       - rsa.misc.action: [$~tmp.status]
       - rsa.misc.result: $~tmp.msg
       - rsa.network.alias_host: [$host.name]
       - rsa.network.domain: $~tmp.domain
       - rsa.network.network_service: $~tmp.service
       - server.domain: $~tmp.domain
-      - service.type: "fortinet"
+      - service.type: fortinet
       - source.ip: $~tmp.src
       - source.port: $~tmp.src_port
-      - tags: ["fortinet.clientendpoint", "forwarded"]
+      - tags: [fortinet.clientendpoint, forwarded]
       - user.name: $~tmp.user
       - ~log: +ef_delete
       - ~tmp: +ef_delete

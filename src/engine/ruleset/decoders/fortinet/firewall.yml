@@ -79,20 +79,20 @@ normalize:
 
   # Mapping for all fortinet-firewall types: event, traffic & utm
   - map:
-    - service.type: "fortinet"
-    - input.type: "log"
-    - tags: ["fortinet-firewall", "forwarded"]
+    - service.type: fortinet
+    - input.type: log
+    - tags: [fortinet-firewall, forwarded]
     - observer.serial_number: $~tmp.devid
     - observer.egress.interface.name: $~tmp.dstintf
     - observer.ingress.interface.name: $~tmp.srcintf
     - observer.name: $~tmp.devname
-    - observer.product: "Fortigate"
-    - observer.type: "firewall"
-    - observer.vendor: "Fortinet"
-    - event.dataset: "fortinet.firewall"
-    - event.module: "fortinet"
-    - event.outcome: "sucess"
-    - event.kind: "event"
+    - observer.product: Fortigate
+    - observer.type: firewall
+    - observer.vendor: Fortinet
+    - event.dataset: fortinet.firewall
+    - event.module: fortinet
+    - event.outcome: sucess
+    - event.kind: event
     - event.timezone: $~tmp.tz
     - event.code: $~tmp.logid
     - event.duration: $~tmp.duration
@@ -362,7 +362,7 @@ normalize:
   - check: >-
         (+s_eq/~tmp.type/utm) AND (+ef_not_exists/~tmp.attack) AND ((+r_match/~tmp.subtype/ips) OR (+r_match/~tmp.subtype/virus))
     map:
-      - event.kind: "alert"
+      - event.kind: alert
   - check:
       - ~tmp.crlevel: +ef_exists
     map:
