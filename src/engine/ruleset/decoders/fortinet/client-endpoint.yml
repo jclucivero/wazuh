@@ -18,11 +18,11 @@ sources:
 parse:
   logpar:
     # January 29 06:09:59 boNemoe4402.www.invalid proto=udp service=http status=deny src=10.150.92.220 dst=10.102.123.34 src_port=7178 dst_port=3994 server_app=reeufugi pid=7880 app_name=enderitq traff_direct=external block_count=5286 logon_user=sumdo@litesse6379.api.domain msg=failure
-    - event.original: <event.created/%B %d %T> <host.name> <~log.payload_messge>
+    - event.original: <event.created/%B %d %T> <host.name> <~log.payload_msg>
 
 normalize:
   - logpar:
-      - ~log.payload_messge: <~tmp/kv/=/ /"/'>
+      - ~log.payload_msg: <~tmp/kv/=/ /"/'>
   - logpar:
       - ~tmp.logon_user: <~tmp.user>@<~tmp.domain>
   - map:
