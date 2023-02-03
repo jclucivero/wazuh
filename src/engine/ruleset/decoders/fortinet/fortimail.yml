@@ -178,7 +178,7 @@ normalize:
       - rsa.misc.event_state: $~log.rsa.misc.event_state
       - rsa.misc.hardware_id: $observer.serial_number
       - rsa.network.network_service: $~log.rsa.network.network_service
-      - service.type: fortine
+      - service.type: fortinet
       - tags: +a_append/fortinet.fortimail/forwarded
       - /@timestamp: +s_concat/$~log.date/T/$~log.time/.000Z
       - rsa.time.event_time: $/@timestamp
