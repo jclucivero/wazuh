@@ -168,38 +168,18 @@ normalize:
       - rsa.email.email_dst: $~log.rsa.email.email_dst
       - rsa.internal.event_desc: +ef_delete
 
-  - check:
-      - rsa.web.fqdn: +ef_exists
-    map:
-      - related.hosts: +a_append/$rsa.web.fqdn
-
-  - check:
-      - host.hostname: +ef_exists
-    map:
-      - related.hosts: +a_append/$host.hostname
-
-  - check:
-      - server.domain: +ef_exists
-    map:
-      - related.hosts: +a_append/$server.domain
-
-  - check:
-      - destination.ip: +ef_exists
-    map:
-      - related.ip: +a_append/$destination.ip
-
-  - check:
-      - source.ip: +ef_exists
-    map:
-      - related.ip: +a_append/$source.ip
-
   - map:
-    - related.user: +a_append/$user.name
-    - rsa.misc.event_state: $~log.rsa.misc.event_state
-    - rsa.misc.hardware_id: $observer.serial_number
-    - rsa.network.network_service: $~log.rsa.network.network_service
-    - service.type: fortine
-    - tags: +a_append/fortinet.fortimail/forwarded
-    - /@timestamp: +s_concat/$~log.date/T/$~log.time/.000Z
-    - rsa.time.event_time: $/@timestamp
-    - ~log: +ef_delete
+      - related.hosts: +a_append/$rsa.web.fqdn
+      - related.hosts: +a_append/$host.hostname
+      - related.hosts: +a_append/$server.domain
+      - related.ip: +a_append/$destination.ip
+      - related.ip: +a_append/$source.ip
+      - related.user: +a_append/$user.name
+      - rsa.misc.event_state: $~log.rsa.misc.event_state
+      - rsa.misc.hardware_id: $observer.serial_number
+      - rsa.network.network_service: $~log.rsa.network.network_service
+      - service.type: fortine
+      - tags: +a_append/fortinet.fortimail/forwarded
+      - /@timestamp: +s_concat/$~log.date/T/$~log.time/.000Z
+      - rsa.time.event_time: $/@timestamp
+      - ~log: +ef_delete
