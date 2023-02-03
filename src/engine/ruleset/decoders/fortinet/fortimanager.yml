@@ -154,8 +154,8 @@ normalize:
   # Checks if a valid fortinet log was found
   - check: rsa.internal.messageid==generic_fortinetmgr OR rsa.internal.messageid==generic_fortinetmgr_1 OR rsa.internal.messageid==event_fortinetmgr
     map:
-      - "@timestamp": +s_concat/$~kvMap.date/T/$~kvMap.time/.000Z
-      - event.action: $~kvMap.action
+      - \@timestamp: +s_concat/$~kvMap.date/T/$~kvMap.time/.000Z
+      - event.action: +s_lo/$~kvMap.action
       - event.dataset: "fortinet.fortimanager"
       - event.module: "fortinet"
       - fileset.name: fortimanager
@@ -178,24 +178,24 @@ normalize:
   # Finally maps the network protocol numbers to strings
   - check: +i_eq/network.protocol/0 OR network.protocol==hopopt
     map:
-      - network.protocol: HOPOPT
+      - network.protocol: hoport
 
   - check: +i_eq/network.protocol/1 OR network.protocol==icmp
     map:
-      - network.protocol: ICMP
+      - network.protocol: icmp
 
   - check: +i_eq/network.protocol/3 OR network.protocol==ggp
     map:
-      - network.protocol: GGP
+      - network.protocol: ggp
 
   - check: +i_eq/network.protocol/6 OR network.protocol==tcp
     map:
-      - network.protocol: TCP
+      - network.protocol: tcp
 
   - check: +i_eq/network.protocol/17 OR network.protocol==udp
     map:
-      - network.protocol: UDP
+      - network.protocol: udp
 
   - check: +i_eq/network.protocol/21 OR network.protocol==prm
     map:
-      - network.protocol: PRM
+      - network.protocol: prm
