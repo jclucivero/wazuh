@@ -258,14 +258,9 @@ normalize:
         +s_eq/event.action/server-rst OR +s_eq/~tmp.utmaction/block)
     map:
       - event.type: +a_append/denied
-  - check:
-    - ~tmp.type: traffic
-    - ~tmp.utmaction: +ef_not_exists
-    - event.action: +s_ne/block
-    - event.action: +s_ne/blocked
-    - event.action: +s_ne/deny
-    - event.action: +s_ne/close
-    - event.action: +s_ne/server-rst
+  - check: >-
+        +s_eq/~tmp.type/traffic AND +ef_not_exists/~tmp.utmaction AND
+        (+s_eq/event.action/dns OR +s_eq/event.action/accept OR +s_eq/event.action/ip-conn)
     map:
       - event.type: +a_append/allowed
   - check:
