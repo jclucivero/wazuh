@@ -18,15 +18,11 @@ sources:
 parse:
   logpar:
     # date=2018-1-27 time=05:21:06 device_id=atcupid log_id=onse log_part=psa type=virus_file-signature pri=high destla to="fugitse" src=[10.12.86.130] session_id=dese msg="Attachment file (duntutla) has sha1 hash value: lamco"
-    - event.original: >-
-        date=<~log.date> time=<~log.time> device_id=<observer.serial_number> log_id=<event.code> log_part=<~log.rsa.misc.reference_id1>
-        type=<event.action> pri=<log.level> <~> to=<~log.rsa.email.email_dst>
-        src=[<source.ip>] session_id=<~log.rsa.misc.log_session_id> msg="Attachment file \(<file.name>\) <~>: <~log.rsa.misc.checksum>"
     # date=2018-11-9 time=02:12:32 device_id=dolo log_id=velites log_part=oloremi type=virus_file-signature pri=high apari to=tsunt src="caecat [10.108.10.197]" session_id=enim msg="Attachment file (umq) has sha1 hash value: sistena"
     - event.original: >-
         date=<~log.date> time=<~log.time> device_id=<observer.serial_number> log_id=<event.code> log_part=<~log.rsa.misc.reference_id1>
         type=<event.action> pri=<log.level> <~> to=<~log.rsa.email.email_dst>
-        src="<source.domain> [<source.ip>]" session_id=<~log.rsa.misc.log_session_id> msg="Attachment file \(<file.name>\) <~>: <~log.rsa.misc.checksum>"
+        src="(?<source.domain>) [<source.ip>]" session_id=<~log.rsa.misc.log_session_id> msg="Attachment file \(<file.name>\) <~>: <~log.rsa.misc.checksum>"
     # date=2016-12-23 time=00:09:07 device_id=dolore log_id=onsecte log_part=nBCSedut type=virus subtype=file-signature pri=high from="modocons" to=gitsed src="10.16.177.212" session_id="emp" msg="Attachment file (pisciv) has sha1 hash value: lumdolor"
     - event.original: >-
         date=<~log.date> time=<~log.time> device_id=<observer.serial_number> log_id=<event.code> log_part=<~log.rsa.misc.reference_id1>
