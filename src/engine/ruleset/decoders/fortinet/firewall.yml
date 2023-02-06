@@ -100,6 +100,8 @@ normalize:
     - event.reason: $~tmp.reason
     - event.action: $~tmp.action
     - log.level: $~tmp.level
+    - source.ip: $~tmp.srcip
+    - source.port: $~tmp.locport
     - source.packets: $~tmp.sentpkt
     - source.nat.ip: $~tmp.transip
     - source.nat.port: $~tmp.transport
@@ -116,8 +118,11 @@ normalize:
     - rule.description: $~tmp.logdesc
     - rule.name: $~tmp.policyname
     - rule.uuid: $~tmp.poluuid
+    - rule.ruleset: $~tmp.policytype
     - destination.packets: $~tmp.rcvdpkt
     - destination.bytes: $~tmp.rcvdbyte
+    - destination.ip: $~tmp.dstip
+    - destination.port: $~tmp.remport
     - url.domain: $~tmp.hostname
     - url.original: $~tmp.url
     - url.path: $~tmp.url
@@ -135,7 +140,8 @@ normalize:
     - dns.question.type: $~tmp.qtype
     - related.hosts: [$~tmp.qname]
     # TODO: it does't work
-    - ~tmp.agent_array: +s_to_array/$~tmp.agent/\/
+    - ~tmp.aux: \/
+    - ~tmp.agent_array: +s_to_array/$~tmp.agent/~tmp.aux
     - user_agent.name: $~tmp.agent_array.1
     - user_agent.original: $~tmp.agent
     - user_agent.version: $~tmp.agent_array.2
@@ -159,10 +165,6 @@ normalize:
     map:
       - rule.category: $~tmp.catdesc
   - check:
-    - ~tmp.policytype: +ef_exists
-    map:
-      - rule.ruleset: $~tmp.policytype
-  - check:
     - ~tmp.policytype: +ef_not_exists
     - ~tmp.profile: +ef_exists
     map:
@@ -181,26 +183,14 @@ normalize:
       - source.user.name: $~tmp.user
       - related.user: [$source.user.name]
   - check:
-    - ~tmp.dstip: +ef_exists
-    map:
-      - destination.ip: $~tmp.dstip
-  - check:
     - ~tmp.remip: +ef_exists
     - ~tmp.dstip: +ef_not_exists
     map:
       - destination.ip: $~tmp.remip
   - check:
-    - ~tmp.remport: +ef_exists
-    map:
-      - destination.port: $~tmp.remport
-  - check:
     - ~tmp.dstport: +ef_exists
     map:
       - destination.port: $~tmp.dstport
-  - check:
-    - ~tmp.srcip: +ef_exists
-    map:
-      - source.ip: $~tmp.srcip
   - check:
     - ~tmp.locip: +ef_exists
     - ~tmp.srcip: +ef_not_exists
@@ -208,10 +198,6 @@ normalize:
       - source.ip: $~tmp.locip
   - map:
     - related.ip: [$source.ip]
-  - check:
-    - ~tmp.locport: +ef_exists
-    map:
-      - source.port: $~tmp.locport
   - check:
     - ~tmp.srcport: +ef_exists
     map:
