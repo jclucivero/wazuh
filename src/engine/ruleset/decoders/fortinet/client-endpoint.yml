@@ -30,7 +30,6 @@ normalize:
       - destination.port: $~tmp.dst_port
       - event.action: $~tmp.status
       - event.code: $~tmp.service
-      - event.created: $event.created
       - event.dataset: fortinet.clientendpoint
       - event.module: fortinet
       - event.outcome: $~tmp.msg
