@@ -139,15 +139,16 @@ normalize:
     - dns.question.name: $~tmp.qname
     - dns.question.type: $~tmp.qtype
     - related.hosts: [$~tmp.qname]
-    # TODO: it does't work
-    - ~tmp.aux: \/
-    - ~tmp.agent_array: +s_to_array/$~tmp.agent/~tmp.aux
+    # TODO: it does't work: the hf can't parse the special char /.
+    # We cannot use a temporary variable to store the special character since the second argument to hf expects a character.
+    - ~tmp.agent_array: +s_to_array/$~tmp.agent/\/
     - user_agent.name: $~tmp.agent_array.1
     - user_agent.original: $~tmp.agent
     - user_agent.version: $~tmp.agent_array.2
     - ~tmp.timestamp: +s_concat/$~tmp.date/T/$~tmp.time/.000
     - ~tmp.subtype: +s_lo/$~tmp.subtype
     - ~tmp.addrgrp: $~tmp.addr
+    - ~tmp.na: N/A
 
   # Check-mapping for all fortinet-firewall types: event, traffic & utm
   - check:
@@ -176,9 +177,9 @@ normalize:
     map:
       - rule.ruleset: $~tmp.applist
   - check:
-    - ~tmp.user: +ef_exists
-    # TODO: it does't work
-    # - ~tmp.user: +s_ne/N\/A
+    # TODO: a temporary variable must be used in order to validate the
+    # inequality of "N/A", it does't work: - ~tmp.user: +s_ne/N\/A
+    - ~tmp.user: +s_ne/$~tmp.na
     map:
       - source.user.name: $~tmp.user
       - related.user: [$source.user.name]
@@ -244,8 +245,7 @@ normalize:
     map:
       - event.category: [network]
       - event.type: [connection]
-  - check: >-
-        (+s_eq/~tmp.type/traffic) OR (+s_eq/~tmp.type/utm)
+  - check: +s_eq/~tmp.type/traffic OR +s_eq/~tmp.type/utm
     map:
       - event.category: [network]
   - check:
@@ -253,9 +253,9 @@ normalize:
     map:
       - event.type: [connection]
   - check: >-
-        (+s_eq/~tmp.type/traffic) AND ((+s_eq/event.action/block) OR (+s_eq/event.action/blocked) OR
-        (+s_eq/event.action/deny) OR (+s_eq/event.action/close) OR
-        (+s_eq/event.action/server-rst) OR (+s_eq/~tmp.utmaction/block))
+        +s_eq/~tmp.type/traffic AND (+s_eq/event.action/block OR +s_eq/event.action/blocked OR
+        +s_eq/event.action/deny OR +s_eq/event.action/close OR
+        +s_eq/event.action/server-rst OR +s_eq/~tmp.utmaction/block)
     map:
       - event.type: +a_append/denied
   - check:
@@ -295,22 +295,21 @@ normalize:
     - source.packets: +ef_exists
     map:
     - network.packets: $source.packets
-  - check: >-
-        (+s_eq/~tmp.type/traffic) AND (+ef_exists/destination.ip)
+  - check: +s_eq/~tmp.type/traffic AND +ef_exists/destination.ip
     map:
       - related.ip: +a_append/$destination.ip
 
   # Check-mapping for firewall-utm
   - check: >-
-        (+s_eq/~tmp.type/utm) AND ((+s_eq/event.action/block) OR
-        (+s_eq/event.action/blocked) OR (+s_eq/event.action/deny) OR
-        (+s_eq/event.action/close) OR (+s_eq/event.action/server-rst) OR
-        (+s_eq/event.action/dropped))
+        +s_eq/~tmp.type/utm AND (+s_eq/event.action/block OR
+        +s_eq/event.action/blocked OR +s_eq/event.action/deny OR
+        +s_eq/event.action/close OR +s_eq/event.action/server-rst OR
+        +s_eq/event.action/dropped)
     map:
       - event.type: +a_append/denied
   - check: >-
-        (+s_eq/~tmp.type/utm) AND ((+s_eq/event.action/pass) OR
-        (+s_eq/event.action/passthrough) OR (+s_eq/event.action/exempt))
+        +s_eq/~tmp.type/utm AND (+s_eq/event.action/pass OR
+        +s_eq/event.action/passthrough OR +s_eq/event.action/exempt)
     map:
       - event.type: +a_append/allowed
   - check:
@@ -326,13 +325,10 @@ normalize:
     - destination.ip: +ef_exists
     map:
       - dns.resolved_ip: [$destination.ip]
-  - check: >-
-        (+s_eq/~tmp.type/utm) AND (+ef_exists/destination.ip) AND
-        (+ef_not_exists/~tmp.ipaddr)
+  - check: +s_eq/~tmp.type/utm AND +ef_exists/destination.ip AND +ef_not_exists/~tmp.ipaddr
     map:
       - related.ip: +a_append/$destination.ip
-  - check: >-
-        (+s_eq/~tmp.type/utm) AND (+ef_exists/~tmp.ipaddr)
+  - check: +s_eq/~tmp.type/utm AND +ef_exists/~tmp.ipaddr
     map:
       - related.ip: +ef_merge/$~tmp.ipaddr_array
   - check:
@@ -346,7 +342,8 @@ normalize:
     map:
       - event.category: +a_append/intrusion_detection
   - check: >-
-        (+s_eq/~tmp.type/utm) AND (+ef_not_exists/~tmp.attack) AND ((+r_match/~tmp.subtype/ips) OR (+r_match/~tmp.subtype/virus))
+        +s_eq/~tmp.type/utm AND +ef_not_exists/~tmp.attack AND
+        (+r_match/~tmp.subtype/ips OR +r_match/~tmp.subtype/virus)
     map:
       - event.kind: alert
   - check:
