@@ -15,6 +15,9 @@ metadata:
 sources:
   - decoder/queue-localfile/0
 
+check:
+  - event.original: +r_match/(?i)device_id=
+
 definitions:
   def_parser_header: date=<~log.date> time=<~log.time> device_id=<observer.serial_number> log_id=<event.code> log_part=<~log.rsa.misc.reference_id1>
   def_parser_type_subtype_pri: type=<event.action> subtype=<~log.rsa.internal.messageid> pri=<log.level>
