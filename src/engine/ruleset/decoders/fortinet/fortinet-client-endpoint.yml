@@ -64,5 +64,5 @@ normalize:
       - ~log: +ef_delete
       - ~tmp: +ef_delete
 
-# TODO: Could not map field 'log.offset' due to inability to persist values into yml variables.
+# TODO: Could not map field 'log.offset' due to inability to persist values into different events.
 # Also, there is no helper that allows obtaining the size of an event.
