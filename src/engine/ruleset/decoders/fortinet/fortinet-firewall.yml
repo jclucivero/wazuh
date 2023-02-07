@@ -102,6 +102,7 @@ normalize:
     - log.level: $~tmp.level
     - source.ip: $~tmp.srcip
     - source.port: $~tmp.locport
+    - source.port: $~tmp.srcport
     - source.packets: $~tmp.sentpkt
     - source.nat.ip: $~tmp.transip
     - source.nat.port: $~tmp.transport
@@ -196,10 +197,6 @@ normalize:
       - source.ip: $~tmp.locip
   - map:
     - related.ip: [$source.ip]
-  - check:
-    - ~tmp.srcport: +ef_exists
-    map:
-      - source.port: $~tmp.srcport
   - check:
     - log.level: error
     map:
