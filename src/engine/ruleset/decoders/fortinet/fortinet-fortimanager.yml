@@ -169,7 +169,7 @@ normalize:
       - rsa.misc.event_source: $~kvMap.devname
       - rsa.misc.event_type: $~kvMap.type
       - rsa.misc.severity: $~kvMap.pri
-      - rsa.time.event_time: $@timestamp
+      - rsa.time.event_time: $\@timestamp
       - service.type: fortinet
       - tags: +a_append/$event.dataset
       - tags: +a_append/forwarded
