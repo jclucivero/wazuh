@@ -123,6 +123,7 @@ normalize:
     - destination.bytes: $~tmp.rcvdbyte
     - destination.ip: $~tmp.dstip
     - destination.port: $~tmp.remport
+    - destination.port: $~tmp.dstport
     - url.domain: $~tmp.hostname
     - url.original: $~tmp.url
     - url.path: $~tmp.url
@@ -188,10 +189,6 @@ normalize:
     - ~tmp.dstip: +ef_not_exists
     map:
       - destination.ip: $~tmp.remip
-  - check:
-    - ~tmp.dstport: +ef_exists
-    map:
-      - destination.port: $~tmp.dstport
   - check:
     - ~tmp.locip: +ef_exists
     - ~tmp.srcip: +ef_not_exists
