@@ -176,26 +176,26 @@ normalize:
       - ~kvMap: +ef_delete
 
   # Finally maps the network protocol numbers to strings
-  - check: +i_eq/network.protocol/0 OR network.protocol==hopopt
+  - check: +i_eq/network.protocol/0
     map:
       - network.protocol: hoport
 
-  - check: +i_eq/network.protocol/1 OR network.protocol==icmp
+  - check: +i_eq/network.protocol/1
     map:
       - network.protocol: icmp
 
-  - check: +i_eq/network.protocol/3 OR network.protocol==ggp
+  - check: +i_eq/network.protocol/3
     map:
       - network.protocol: ggp
 
-  - check: +i_eq/network.protocol/6 OR network.protocol==tcp
+  - check: +i_eq/network.protocol/6
     map:
       - network.protocol: tcp
 
-  - check: +i_eq/network.protocol/17 OR network.protocol==udp
+  - check: +i_eq/network.protocol/17
     map:
       - network.protocol: udp
 
-  - check: +i_eq/network.protocol/21 OR network.protocol==prm
+  - check: +i_eq/network.protocol/21
     map:
       - network.protocol: prm
