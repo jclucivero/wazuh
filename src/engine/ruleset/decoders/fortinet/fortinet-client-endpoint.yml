@@ -18,7 +18,7 @@ sources:
 parse:
   logpar:
     # January 29 06:09:59 boNemoe4402.www.invalid proto=udp service=http status=deny src=10.150.92.220 dst=10.102.123.34 src_port=7178 dst_port=3994 server_app=reeufugi pid=7880 app_name=enderitq traff_direct=external block_count=5286 logon_user=sumdo@litesse6379.api.domain msg=failure
-    - event.original: <event.created/%B %d %T> <host.name> <~log.payload_msg>
+    - event.original: <event.created/%B %d %T> <host.hostname> <~log.payload_msg>
 
 normalize:
   - logpar:
@@ -41,7 +41,7 @@ normalize:
       - observer.type: Anti-Virus
       - observer.vendor: Fortinet
       - process.pid: $~tmp.pid
-      - related.hosts: +a_append/$host.name/$~tmp.domain
+      - related.hosts: +a_append/$host.hostname/$~tmp.domain
       - related.ip: +a_append/$~tmp.src/$~tmp.dst
       - related.user: [$~tmp.user]
       - rsa.counters.dclass_c1: $~tmp.block_count
@@ -52,7 +52,7 @@ normalize:
       - rsa.investigations.ec_theme: ALM
       - rsa.misc.action: [$~tmp.status]
       - rsa.misc.result: $~tmp.msg
-      - rsa.network.alias_host: [$host.name]
+      - rsa.network.alias_host: [$host.hostname]
       - rsa.network.domain: $~tmp.domain
       - rsa.network.network_service: $~tmp.service
       - server.domain: $~tmp.domain
